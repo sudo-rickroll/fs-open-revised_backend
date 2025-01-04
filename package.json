@@ -1,0 +1,32 @@
+{
+  "name": "phonebook",
+  "version": "1.0.0",
+  "description": "phonebook backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudo-rickroll/fs-open-revised_backend.git"
+  },
+  "keywords": [
+    "phonebook"
+  ],
+  "author": "rangasai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sudo-rickroll/fs-open-revised_backend/issues"
+  },
+  "homepage": "https://github.com/sudo-rickroll/fs-open-revised_backend#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  }
+}
