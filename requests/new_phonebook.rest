@@ -17,3 +17,6 @@ Content-Type: application/json
     "name": "Arto Kallas", 
     "number": "040-123456"
 }
+
+###
+GET https://fs-open-revised-backend.onrender.com/api/persons
