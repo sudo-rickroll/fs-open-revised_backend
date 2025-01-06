@@ -6,8 +6,15 @@ const url = process.env.MONGODB_URI
 mongoose.connect(url);
 
 const schema = new mongoose.Schema({
-    name: String,
-    number: String
+    name: {
+        type: String,
+        minLength: 3,
+        required: true
+    },
+    number: {
+        type: String,
+        required: true
+    }
 })
 
 schema.set('toJSON', {

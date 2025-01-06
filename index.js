@@ -18,10 +18,10 @@ const unknownEndpointHandler = (request, response, next) => next({
 });
 
 const errorHandler = (error, request, response, next) => {
-    console.error(error.message);
-    response.status(400).send({
-        message: error.message
+    response.send({
+        error: error.message
     })
+    
 }
 
 app.get("/api/persons", (request, response, next) => {
@@ -40,7 +40,17 @@ app.get("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
     const item = Phonebook.findByIdAndDelete(request.params.id)
-                            .then(result => response.status(200).send(result))
+                            .then(result => {
+                                if(result === null)
+                                {
+                                    next({
+                                        message: "Not found"
+                                    })                                    
+                                }
+                                else{
+                                    response.status(200).json(result);
+                                }
+                            })
                             .catch(error => next(error))
 })
 
