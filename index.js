@@ -82,10 +82,12 @@ app.put("/api/persons/:id", (request, response, next) => {
                 .catch(error => next(error))
 })
 
+
 app.use(unknownEndpointHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;
+
 
 app.listen(PORT, () => {
     console.log(`Application started on ${PORT}`);
