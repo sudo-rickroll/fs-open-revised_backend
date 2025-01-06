@@ -1,6 +1,12 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
 
+const validationConstraints = {
+    numberRegex: /^\d{2,3}-\d{6,}/,
+    message: input => `Phone number ${input} does not meet the format specifications`,
+    validator: input => validationConstraints.numberRegex.test(input)
+}
+
 const url = process.env.MONGODB_URI
 
 mongoose.connect(url);
@@ -13,7 +19,11 @@ const schema = new mongoose.Schema({
     },
     number: {
         type: String,
-        required: true
+        required: true,
+        validate:{
+            validator: input => validationConstraints.validator(input),
+            message: input => validationConstraints.message(input.value)
+        }
     }
 })
 

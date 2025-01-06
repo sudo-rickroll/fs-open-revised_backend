@@ -18,7 +18,8 @@ const unknownEndpointHandler = (request, response, next) => next({
 });
 
 const errorHandler = (error, request, response, next) => {
-    response.send({
+    
+    response.status(500).send({
         error: error.message
     })
     
@@ -44,7 +45,7 @@ app.delete("/api/persons/:id", (request, response, next) => {
                                 if(result === null)
                                 {
                                     next({
-                                        message: "Not found"
+                                        message: "Item not found, may have been deleted already"
                                     })                                    
                                 }
                                 else{
@@ -55,25 +56,17 @@ app.delete("/api/persons/:id", (request, response, next) => {
 })
 
 app.post("/api/persons", (request, response, next) => {
-    let contact = request.body;
-    if((contact.name ?? "") === "" || (contact.number ?? "") === ""){
-        next({
-            message: "Name or number cannot be empty"
-        })
-    }
-
-    contact = new Phonebook(contact);
+    const contact = new Phonebook(request.body);
 
     Phonebook.find({name: contact.name}).then(result => {
         if(result.length > 0){
             response.status(400).json({
                 message: "Name already exists"
             })
-        }
-        else{
+        }else{
             contact.save().then(result => {
                 response.status(200).json(result);
-            })
+            }).catch(error => next(error))
         }
 
     }).catch(error => next(error))
@@ -82,11 +75,7 @@ app.post("/api/persons", (request, response, next) => {
 
 app.put("/api/persons/:id", (request, response, next) => {
     let contact = request.body;
-    if((contact.name || "") === "" || (contact.number || "") === ""){
-        next({
-            message: "Name or number cannot be empty"
-        })
-    }
+    
 
     Phonebook.findByIdAndUpdate(request.params.id, contact, {new: true})
                 .then(result => response.json(result))
