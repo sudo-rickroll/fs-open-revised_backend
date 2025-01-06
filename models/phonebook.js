@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 const validationConstraints = {
     numberRegex: /^\d{2,3}-\d{6,}/,
@@ -7,7 +8,7 @@ const validationConstraints = {
     validator: input => validationConstraints.numberRegex.test(input)
 }
 
-const url = process.env.MONGODB_URI
+const url = process.env.MONGODB_URI || fs.readFileSync('/etc/secrets/MONGODB_URI', 'utf8').trim();
 
 mongoose.connect(url);
 
