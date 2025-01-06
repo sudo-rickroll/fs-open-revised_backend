@@ -14,7 +14,7 @@ schema.set('toJSON', {
     transform: (document, renderedObject) => {
         renderedObject.id = renderedObject._id.toString();
         delete renderedObject._id;
-        delete renderedObject._v;
+        delete renderedObject.__v;
     }
 })
 
